@@ -2,6 +2,7 @@ version: "3.8"
 
 services:
   app:
+    container_name: ynoverflow_back
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -11,22 +12,21 @@ services:
       PORT: ${PORT}
     ports:
       - "10000:${PORT}"
-    # Important to bind/mount your codebase dir to /app dir for live reload
     volumes:
       - ./:/app
   db:
     image: postgres:12.2-alpine
-    container_name: carnet-sportif-db
+    container_name: ynoverflow_db
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - carnet-sportif-vol:/var/lib/postgresql/data
+      - ynoverflow-vol:/var/lib/postgresql/data
       - ./init-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
     ports:
       - "10001:5432"
 
 volumes:
-  carnet-sportif-vol:
+  ynoverflow-vol:
