@@ -1,0 +1,7 @@
+tmp
+bin
+*.exe
+.env
+main
+vendor
+air
