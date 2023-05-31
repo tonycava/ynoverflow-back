@@ -12,22 +12,20 @@ func GenerateISOString() string {
 
 type Base struct {
 	ID        string `gorm:"primarykey" json:"id"`
-	UUID      string `gorm:"primaryKey;autoIncrement:false" json:"uuid"`
 	CreatedAt string `json:"created_at"`
 	UpdatedAt string `json:"updated_at"`
 }
 
 func (base *Base) BeforeCreate(tx *gorm.DB) error {
-	base.UUID = uuid.New().String()
+	base.ID = uuid.New().String()
 
 	t := GenerateISOString()
-	base.CreatedAt, base.UpdatedAt = t, t
-
+	base.CreatedAt = t
+	base.UpdatedAt = t
 	return nil
 }
 
 func (base *Base) AfterUpdate(tx *gorm.DB) error {
-	// update timestamps
 	base.UpdatedAt = GenerateISOString()
 	return nil
 }

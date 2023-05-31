@@ -1,12 +1,10 @@
 package router
 
-import "github.com/gofiber/fiber/v2"
-
-var USER fiber.Router
+import (
+	"backend/user"
+	"github.com/gofiber/fiber/v2"
+)
 
 func SetupRoutes(app *fiber.App) {
-	api := app.Group("/api")
-
-	USER = api.Group("/user")
-	SetupRoutes(app)
+	user.SetupUserRoutes(app.Group("/user"))
 }
