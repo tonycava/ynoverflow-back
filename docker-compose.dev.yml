@@ -10,6 +10,7 @@ services:
       - db
     environment:
       PORT: ${PORT}
+      DATABASE_URL: ${DATABASE_URL}
     ports:
       - "10000:${PORT}"
     volumes:

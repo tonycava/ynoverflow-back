@@ -2,7 +2,6 @@ package database
 
 import (
 	"backend/models"
-	"fmt"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"os"
@@ -16,13 +15,9 @@ var DB *DBInstance
 
 func Connect() {
 
-	pgUser, _ := os.LookupEnv("POSTGRES_USER")
-	pgPassword, _ := os.LookupEnv("POSTGRES_PASSWORD")
-	pgDbname, _ := os.LookupEnv("POSTGRES_DB")
+	pgDatabase, _ := os.LookupEnv("DATABASE_URL")
 
-	fmt.Println(pgUser, pgPassword, pgDbname)
-
-	db, err := gorm.Open(postgres.Open("host=localhost user="+pgUser+" password="+pgPassword+" dbname="+pgDbname+" port=10001 sslmode=disable"), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(pgDatabase), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
