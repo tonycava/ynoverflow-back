@@ -2,6 +2,7 @@ package user
 
 import (
 	"backend/database"
+	"backend/models"
 	"backend/utils"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
@@ -15,7 +16,7 @@ func SetupUserRoutes() {
 }
 
 func CreateUser(c *fiber.Ctx) error {
-	u := new(User)
+	u := new(models.User)
 
 	if err := c.BodyParser(u); err != nil {
 		return c.JSON(fiber.Map{
@@ -28,15 +29,15 @@ func CreateUser(c *fiber.Ctx) error {
 		return c.JSON(errors)
 	}
 
-	if count := database.DB.Where(User{
+	if count := database.DB.Db.Where(models.User{
 		Email: u.Email,
-	}).First(new(User)).RowsAffected; count > 0 {
+	}).First(new(models.User)).RowsAffected; count > 0 {
 		errors.Err, errors.Email = true, "Email already exists"
 	}
 
-	if count := database.DB.Where(User{
+	if count := database.DB.Db.Where(models.User{
 		Username: u.Username,
-	}).First(new(User)).RowsAffected; count > 0 {
+	}).First(new(models.User)).RowsAffected; count > 0 {
 		errors.Err, errors.Username = true, "Username already exists"
 	}
 
@@ -51,7 +52,7 @@ func CreateUser(c *fiber.Ctx) error {
 	}
 
 	u.Password = string(hashedPassword)
-	if err := database.DB.Create(&u).Error; err != nil {
+	if err := database.DB.Db.Create(&u).Error; err != nil {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 

@@ -1,6 +1,7 @@
 package user
 
 import (
+	"backend/models"
 	"backend/utils"
 	"github.com/asaskevich/govalidator"
 	"github.com/gofiber/fiber/v2"
@@ -10,12 +11,14 @@ import (
 	"time"
 )
 
-var jwtKey = []byte(os.Getenv("PRIVATE_KEY"))
-
 func secureAuth() func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
+
+		key, _ := os.LookupEnv("PRIVATE_KEY")
+		jwtKey := []byte(key)
+
 		accessToken := c.Cookies("access_token")
-		claims := new(Claims)
+		claims := new(models.Claims)
 
 		token, _ := jwt.ParseWithClaims(accessToken, claims, func(token *jwt.Token) (interface{}, error) {
 			return jwtKey, nil
@@ -36,8 +39,8 @@ func secureAuth() func(c *fiber.Ctx) error {
 	}
 }
 
-func ValidateRegister(u *User) *UserError {
-	e := UserError{}
+func ValidateRegister(u *models.User) *models.UserError {
+	e := models.UserError{}
 	e.Err, e.Username = utils.IsEmpty(u.Username)
 
 	if !govalidator.IsEmail(u.Email) {
