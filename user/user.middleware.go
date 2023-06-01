@@ -48,19 +48,6 @@ func checkFieldRegister(c *fiber.Ctx) error {
 	return c.Next()
 }
 
-func UserExist(c *fiber.Ctx) error {
-	var user = c.Locals("user").(dto.Login)
-	var userFromDB = GetUserByEmail(user.Email)
-	if userFromDB.Email == "" {
-		return c.Status(fiber.StatusBadRequest).JSON(dto.YnoverflowResponse{
-			Message: "User does not exist",
-			Code:    fiber.StatusBadRequest,
-			Data:    nil,
-		})
-	}
-	return c.Next()
-}
-
 func checkFieldLogin(c *fiber.Ctx) error {
 	var login dto.Login
 	var err = c.BodyParser(&login)

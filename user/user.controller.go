@@ -33,7 +33,7 @@ func login(c *fiber.Ctx) error {
 
 	if !utils.CheckPasswordHash(user.Password, userFromDB.Password) {
 		return c.Status(fiber.StatusBadRequest).JSON(dto.YnoverflowResponse{
-			Message: "Wrong password",
+			Message: "Invalid credentials",
 			Code:    fiber.StatusBadRequest,
 			Data:    nil,
 		})
