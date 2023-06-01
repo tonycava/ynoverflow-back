@@ -12,8 +12,8 @@ func GenerateISOString() string {
 
 type Base struct {
 	ID        string `gorm:"primarykey" json:"id"`
-	CreatedAt string `json:"created_at"`
-	UpdatedAt string `json:"updated_at"`
+	CreatedAt string `json:"createdAt"`
+	UpdatedAt string `json:"updatedAt"`
 }
 
 func (base *Base) BeforeCreate(tx *gorm.DB) error {

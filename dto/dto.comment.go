@@ -4,7 +4,7 @@ import validation "github.com/go-ozzo/ozzo-validation"
 
 type Comment struct {
 	Content string `json:"content"`
-	PostId  string `json:"post_id"`
+	PostId  string `json:"postId"`
 }
 
 func (l Comment) Validate() error {

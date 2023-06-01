@@ -7,7 +7,7 @@ import (
 )
 
 func SetupRoutesComments(router fiber.Router) {
-	router.Get("/post/:postId", CheckPostIdParams, GetCommentsByPostIdController)
-	router.Get("/user/:userId", post.CheckUserIdParams, GetCommentsByUserIdController)
-	router.Post("/", utils.CheckToken, utils.DecodeToken, CheckFieldCreateComment, CheckIfPostExist, CreateCommentController)
+	router.Get("/post/:postId", CheckPostIdParams, getCommentsByPostId)
+	router.Get("/user/", utils.CheckToken, utils.DecodeToken, getCommentsByUserId)
+	router.Post("/", utils.CheckToken, utils.DecodeToken, checkFieldCreateComment, post.CheckIfPostExist, createComment)
 }

@@ -37,3 +37,18 @@ func CheckUserIdParams(c *fiber.Ctx) error {
 
 	return c.Next()
 }
+
+func CheckIfPostExist(c *fiber.Ctx) error {
+	var comment = c.Locals("comment").(dto.Comment)
+	var postId = comment.PostId
+	var postIdFromDb = GetPostById(postId)
+
+	if postIdFromDb.ID == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(dto.YnoverflowResponse{
+			Message: "Post does not exist",
+			Code:    fiber.StatusBadRequest,
+		})
+	}
+
+	return c.Next()
+}

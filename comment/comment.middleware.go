@@ -7,7 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func CheckFieldCreateComment(c *fiber.Ctx) error {
+func checkFieldCreateComment(c *fiber.Ctx) error {
 	var comment dto.Comment
 	var err = c.BodyParser(&comment)
 	var errorValidation = comment.Validate()
@@ -21,21 +21,6 @@ func CheckFieldCreateComment(c *fiber.Ctx) error {
 	}
 
 	c.Locals("comment", comment)
-	return c.Next()
-}
-
-func CheckIfPostExist(c *fiber.Ctx) error {
-	var comment = c.Locals("comment").(dto.Comment)
-	var postId = comment.PostId
-	var postIdFromDb = post.GetPostById(postId)
-
-	if postIdFromDb.ID == "" {
-		return c.Status(fiber.StatusBadRequest).JSON(dto.YnoverflowResponse{
-			Message: "Post does not exist",
-			Code:    fiber.StatusBadRequest,
-		})
-	}
-
 	return c.Next()
 }
 
