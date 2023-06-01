@@ -24,7 +24,7 @@ func Connect() {
 		os.Exit(2)
 	}
 
-	err = db.AutoMigrate(&models.User{})
+	err = db.AutoMigrate(&models.User{}, &models.Post{})
 	if err != nil {
 		return
 	}
