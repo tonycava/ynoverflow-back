@@ -26,3 +26,24 @@ func register(c *fiber.Ctx) error {
 		},
 	})
 }
+
+func login(c *fiber.Ctx) error {
+	var user = c.Locals("user").(dto.Login)
+	var userFromDB = GetUserByEmail(user.Email)
+
+	if !utils.CheckPasswordHash(user.Password, userFromDB.Password) {
+		return c.Status(fiber.StatusBadRequest).JSON(dto.YnoverflowResponse{
+			Message: "Wrong password",
+			Code:    fiber.StatusBadRequest,
+			Data:    nil,
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(dto.YnoverflowResponse{
+		Message: "Successfully logged in",
+		Code:    fiber.StatusOK,
+		Data: fiber.Map{
+			"token": utils.GenerateAccessToken(userFromDB.ID, userFromDB.Email),
+		},
+	})
+}
