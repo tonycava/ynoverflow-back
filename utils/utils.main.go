@@ -1,6 +1,9 @@
 package utils
 
-import "os"
+import (
+	"os"
+	"strconv"
+)
 
 func GetEnv(name string) string {
 	env, isValid := os.LookupEnv(name)
@@ -8,4 +11,9 @@ func GetEnv(name string) string {
 		panic("Environment variable " + name + " not found")
 	}
 	return env
+}
+
+func ParseInt(nbr string) int {
+	intNBr, _ := strconv.Atoi(nbr)
+	return intNBr
 }

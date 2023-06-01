@@ -5,3 +5,7 @@ bin
 main
 vendor
 air
+
+.terraform
+terraform.tfstate
+terraform.tfstate.backup

@@ -13,3 +13,11 @@ func (l Post) Validate() error {
 		validation.Field(&l.Content, validation.Required, validation.Length(1, 50)),
 	)
 }
+
+type PostDTO struct {
+	Id        string `json:"id"`
+	Username  string `json:"username"`
+	Title     string `json:"title"`
+	Content   string `json:"content"`
+	CreatedAt string `json:"createdAt"`
+}

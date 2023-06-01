@@ -7,16 +7,16 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func CheckFieldCreatePost(c *fiber.Ctx) error {
-	var checkFieldPostArray = []string{"title", "content"}
+func checkFieldCreatePost(c *fiber.Ctx) error {
 	var post dto.Post
 	err := c.BodyParser(&post)
+	var errorValidation = post.Validate()
 
-	if (err != nil) ||
-		!utils.CheckFieldPost(post, checkFieldPostArray) {
+	if err != nil || errorValidation != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(dto.YnoverflowResponse{
-			Message: "Invalid request body",
+			Message: utils.Parse(errorValidation.Error()),
 			Code:    fiber.StatusBadRequest,
+			Data:    nil,
 		})
 	}
 

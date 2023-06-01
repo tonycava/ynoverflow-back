@@ -7,6 +7,6 @@ import (
 
 func SetupPostRoutes(router fiber.Router) {
 	router.Get("/", GetAllPostsController)
-	router.Get("/:userId", CheckUserIdParams, GetPostsByUserIdController)
-	router.Post("/", utils.CheckToken, utils.DecodeToken, CheckFieldCreatePost, CreatePostController)
+	router.Post("/", utils.CheckToken, utils.DecodeToken, checkFieldCreatePost, createPostController)
+	router.Get("/:userId", CheckUserIdParams, getPostsByUserIdController)
 }
