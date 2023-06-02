@@ -47,3 +47,20 @@ func login(c *fiber.Ctx) error {
 		},
 	})
 }
+
+func uploadProfilePicture(c *fiber.Ctx) error {
+	var userId = c.Locals("decodedToken").(*dto.Claims).ID
+
+	file, err := c.FormFile("profile-picture")
+	if err != nil {
+		return err
+	}
+
+	uploadProfilePictureToS3Bucket(file, userId)
+
+	return c.Status(fiber.StatusOK).JSON(dto.YnoverflowResponse{
+		Message: "Successfully changed profile picture",
+		Code:    fiber.StatusOK,
+		Data:    nil,
+	})
+}

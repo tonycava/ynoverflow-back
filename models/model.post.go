@@ -6,4 +6,5 @@ type Post struct {
 	Content  string    `json:"content"`
 	UserId   string    `json:"user_id"`
 	Comments []Comment `json:"comments"`
+	View     []View    `json:"views"`
 }

@@ -7,4 +7,5 @@ type User struct {
 	Password string    `json:"password"`
 	Posts    []Post    `json:"posts"`
 	Comments []Comment `json:"comments"`
+	View     []View    `json:"views"`
 }
